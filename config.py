@@ -8,7 +8,8 @@ class Settings(BaseSettings):
     )
 
     chat_model: str = "gpt-3.5-turbo-0125"  # "gpt-4o", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-0125"
-    game_time: int = 5  # mins
+    game_time: int = 5  # 5 mins
+    time_to_read_card: int = 3 # 3 mins
 
     bot_token: str
     openai_api_token: str
