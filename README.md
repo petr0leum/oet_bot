@@ -69,7 +69,9 @@ Generate a Card: Use the __/generate_card__ command to generate a new OET card.
 Play a Game: After generating a card, or just use the __/play_game__ command to start the role play game.
 Evaluate: Use /get_dialog_text to get the text of the current dialogue and /score to get an evaluation of the dialogue. 
 
-### Project Structure
+## Project Structure
+
+```plaintext
 .
 ├── config.py                # Configuration settings
 ├── keyboards                # Keyboards for Telegram bot
@@ -95,4 +97,5 @@ Evaluate: Use /get_dialog_text to get the text of the current dialogue and /scor
 │   ├── format_utils.py      # Formatting utilities
 │   └── openai_utils.py      # OpenAI API interaction utilities
 └── data
-    └── audio_storage        # Directory for storing audio files
+    └── audio_storage        # Directory for storing audio files    
+```
