@@ -32,18 +32,44 @@ async def start(message: types.Message):
 @router.message(F.text == ButtonText.HELP)
 @router.message(Command("help", prefix="!/"))
 async def handle_help(message: types.Message):
-    text = """
-    **Commands available in the bot:**
-    
-    **1.** __/generate\_card__ - Generate a new roleplay card. The bot will provide you with a new card with a unique situation to practice on
-    **2.** __/play\_game__ - Start roleplay. You will receive a card and will be able to record voice messages while playing the role of a doctor
-    """
-    # **3.** __/info__ - Get materials for training. The bot will provide you with a list of available materials to prepare for the OET exam
-    # Show last 5 cards. The bot will show you the last 5 cards you generated
-    # Rate a card. You can rate the card from 1 to 5 points
-    # Show top 5 cards. The bot will show you the top 5 highest rated cards
+    text = markdown.text(
+        markdown.markdown_decoration.quote("Hello! 👋 I'm here to help you prepare for the OET exam."),
+        markdown.markdown_decoration.quote("Here's what I can do for you:"),
+        '',
+        markdown.bold("📝 Generate Card"),
+        markdown.markdown_decoration.quote("Use /generate_card to create new OET scenario cards."),
+        markdown.text(
+            markdown.markdown_decoration.quote("You can"),
+            markdown.bold("like"), 
+            "or",
+            markdown.bold("dislike"),
+            markdown.markdown_decoration.quote("the generated cards, and the bot will learn your preferences over time."),
+            sep=" "
+        ),
+        '',
+        markdown.bold("🎭 Play Game"),
+        markdown.markdown_decoration.quote("Use /play_game to start a role-playing game where the AI Bot acts as your interlocutor."),
+        markdown.text(
+            markdown.markdown_decoration.quote("You'll communicate through"), 
+            markdown.bold("voice messages"), 
+            markdown.markdown_decoration.quote(", simulating the OET Speaking exam."),
+            sep=" "
+        ),
+        '',
+        markdown.bold("💾 Show Liked Cards"),
+        markdown.markdown_decoration.quote("Use /show_liked_cards to quickly view your recently liked cards."),
+        '', 
+        markdown.bold(
+            markdown.markdown_decoration.quote("🗙 Cancel the current operation?")
+        ),
+        markdown.markdown_decoration.quote("Use /cancel command."),
+        '',
+        markdown.markdown_decoration.quote("Happy studying and good luck on your exam! 🍀"),
+        sep='\n'
+    )
+
     await message.answer(
         text=text,
-        parse_mode=ParseMode.MARKDOWN,
+        parse_mode=ParseMode.MARKDOWN_V2,
         reply_markup=get_on_help_kb(),
     )

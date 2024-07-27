@@ -3,7 +3,15 @@ from typing import List, Dict, Any
 from openai import OpenAI
 
 from config import settings
-from llms_content import few_shot_content, oet_prompt_question, bad_card_prompt
+from llms_content import (
+    oet_cards,
+    few_shot_content, 
+    oet_card_question,
+    ideal_card_question,
+    bad_card_question,
+    good_card_question
+)
+
 
 
 client = OpenAI(
@@ -12,26 +20,11 @@ client = OpenAI(
     project=settings.openai_proj_oet
 )
 
-def fetch_few_examples(examples: List[Dict[str, Any]],  
-                            num_examples: int = 5) -> List[Dict[str, Any]]:
+def generate_prompt(good_gen_cards: List[Dict[str, Any]],
+                    bad_gen_cards: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     """
-    Fetch a random sample of few-shot examples from the provided examples.
-
-    Args:
-        examples (List[Dict[str, Any]]): List of example dictionaries to sample from.
-        num_examples (int, optional): Number of examples to fetch. Defaults to 5.
-
-    Returns:
-        List[Dict[str, Any]]: A list of randomly sampled example dictionaries.
-    """
-    prompt_examples = random.sample(examples, num_examples)
-    return prompt_examples
-
-def generate_prompt(ideal_cards: List[Dict[str, Any]],
-                    good_gen_cards: List[Dict[str, Any]] = None,
-                    bad_gen_cards: List[Dict[str, Any]] = None) -> List[Dict[str, str]]:
-    """
-    Generate a prompt using the fetched few-shot examples from the provided examples.
+    Generate a prompt using different cards examples from the provided examples. 
+    This includes a mix of ideal cards, good cards, and bad cards examples.
 
     Args:
         prompt_examples (List[Dict[str, Any]]): List of few-shot example dictionaries.
@@ -39,26 +32,33 @@ def generate_prompt(ideal_cards: List[Dict[str, Any]],
     Returns:
         List[Dict[str, str]]: A list of messages to be used as a prompt for the chatbot.
     """
-    messages = [
-        {"role": "system", "content": few_shot_content}
-    ]
-    
-    for ex in ideal_cards:
-        messages.append({"role": "user", "content": oet_prompt_question})
-        messages.append({"role": "assistant", "content": f"{ex}"})
+    content_real_card = random.sample(oet_cards, 1)
+    remaining_examples = random.sample(
+        [example for example in oet_cards if example not in content_real_card], 
+        settings.card_examples_num
+    )
 
-    if good_gen_cards:
-        for ex in good_gen_cards:
-            messages.append({"role": "user", "content": oet_prompt_question})
-            messages.append({"role": "assistant", "content": f"{ex}"})
+    messages = [
+        {
+            "role": "system", 
+            "content": few_shot_content.replace('__ideal_card__', str(content_real_card))
+        }
+    ]
+    messages.append({"role": "user", "content": oet_card_question})
+
+    for ex in remaining_examples:
+        messages.append({"role": "assistant", "content": f"{ex}"})
+        messages.append({"role": "user", "content": ideal_card_question})
     
     if bad_gen_cards:
-        messages.append({"role": "user", "content": oet_prompt_question})
         for ex in bad_gen_cards:
             messages.append({"role": "assistant", "content": f"{ex}"})
-            messages.append({"role": "user", "content": bad_card_prompt})
-    else:
-        messages.append({"role": "user", "content": oet_prompt_question})
+            messages.append({"role": "user", "content": bad_card_question})
+        
+    if good_gen_cards:
+        for ex in good_gen_cards:
+            messages.append({"role": "assistant", "content": f"{ex}"})
+            messages.append({"role": "user", "content": good_card_question})
     
     return messages
 

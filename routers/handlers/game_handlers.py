@@ -169,7 +169,6 @@ async def end_preparation_early(message: types.Message, state: FSMContext):
     """
     await message.delete()
 
-    logging.info('--------------------Статус ИГРЫ досрочно')
     await state.set_state(RolePlayState.RolePlay)
     await state.update_data(
         rp_start_time=datetime.now(),

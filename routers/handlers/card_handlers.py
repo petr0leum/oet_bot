@@ -4,6 +4,7 @@ from aiogram.enums import ParseMode
 from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
 
+from config import settings
 from database import save_user_card
 from routers.states import CardState
 from routers.commands.role_play_game import play_game
@@ -43,7 +44,7 @@ async def regenerate_card(message: types.Message, state: FSMContext) -> None:
     recent_disliked_cards = state_data.get('recent_disliked_cards', [])
     recent_disliked_cards.append(current_card)
 
-    if len(recent_disliked_cards) > 5:
+    if len(recent_disliked_cards) > settings.card_examples_num:
         recent_disliked_cards.pop(0)  # Keep only the last 5 disliked cards
 
     await state.update_data(recent_disliked_cards=recent_disliked_cards)

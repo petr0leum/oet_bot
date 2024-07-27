@@ -1,4 +1,3 @@
-import logging
 import asyncio
 from datetime import datetime, timedelta
 
@@ -10,11 +9,15 @@ from aiogram.fsm.context import FSMContext
 from aiogram.utils.chat_action import ChatActionSender
 
 from config import settings
-from llms_content import oet_cards, ai_patient_content
+from llms_content import ai_patient_content
 from routers.states import RolePlayState
+from .generate_card import generate_scenario
 from keyboards import ButtonText, get_on_start_kb, game_preparation_keyboard
 from routers.handlers.game_handlers import update_timer_message
-from utils import fetch_few_examples, format_json_to_markdown, take_patient_info_for_prompt
+from utils import (
+    format_json_to_markdown,
+    take_patient_info_for_prompt
+)
 
 router = Router(name=__name__)
 
@@ -39,9 +42,7 @@ async def play_game(message: types.Message, state: FSMContext, card_text: str = 
             if card_text:
                 card_json = eval(card_text)
             else:
-                # card_json = await generate_scenario(message, state)
-                await asyncio.sleep(5)
-                card_json = fetch_few_examples(oet_cards, 1)[0] ## Take a random card from the card storage
+                card_json = await generate_scenario(message, state)
 
             _, _, doctor = format_json_to_markdown(card_json)
             patient_card = take_patient_info_for_prompt(card_json)

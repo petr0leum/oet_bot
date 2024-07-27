@@ -8,7 +8,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
 from aiogram.utils.chat_action import ChatActionSender
 
-from llms_content import oet_cards
+from database import get_last_user_cards
 from keyboards import (
     ButtonText,
     get_on_start_kb,
@@ -17,7 +17,6 @@ from keyboards import (
 from utils import (
     check_generated_card,
     chatbot_response,
-    fetch_few_examples,
     generate_prompt,
     format_json_to_markdown,
     convert_json_to_text
@@ -39,14 +38,13 @@ async def generate_scenario(message: types.Message, state: FSMContext):
     try:
         state_data = await state.get_data()
 
+        user_id = str(message.from_user.id)
         bad_examples = state_data.get('recent_disliked_cards', None)
-        #good_examples = get_user_cards()# Get cards that user liked before
-        ideal_examples = fetch_few_examples(oet_cards)
-        
-        prompt = generate_prompt(ideal_examples, bad_gen_cards=bad_examples) # good_examples
-        gen_card = chatbot_response(prompt, response_format="json_object")
-        logging.info(gen_card)
+        good_examples = get_last_user_cards(user_id) # Get cards that user liked before
 
+        prompt = generate_prompt(good_examples, bad_examples)
+        gen_card = chatbot_response(prompt, response_format="json_object")
+        
         card_json = check_generated_card(gen_card)
         await state.update_data(current_card=gen_card)
 

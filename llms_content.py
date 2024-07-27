@@ -1,6 +1,8 @@
 # -------------------------- CARD GENERATION --------------------------
-oet_prompt_question = "Generate a card for speaking role play in OET exam. The card must be in JSON format with 5 keys: SETTINGS; PATIENT_CARD; DOCTOR_CARD; DOCTOR_TASK; PATIENT_TASK."
-bad_card_prompt = "I don't like this card, maybe the illness is the problem or maybe the tasks just didn't turn out very well. Generate another card for speaking role play in OET exam. The card must be in JSON format with 5 keys: SETTINGS; PATIENT_CARD; DOCTOR_CARD; DOCTOR_TASK; PATIENT_TASK."
+oet_card_question = "Generate a card for speaking role play in OET exam. The card must be in JSON format with 5 keys: SETTINGS; PATIENT_CARD; DOCTOR_CARD; DOCTOR_TASK; PATIENT_TASK."
+ideal_card_question = "It's a PERFECT example of a card. Keep it up! Generate another card for speaking role play in OET exam. The card must be in JSON format with 5 keys: SETTINGS; PATIENT_CARD; DOCTOR_CARD; DOCTOR_TASK; PATIENT_TASK."
+bad_card_question = "I DIDN'T LIKE the previous card, maybe the illness is the problem or maybe the tasks just didn't turn out very well. Generate another card for speaking role play in OET exam. The card must be in JSON format with 5 keys: SETTINGS; PATIENT_CARD; DOCTOR_CARD; DOCTOR_TASK; PATIENT_TASK."
+good_card_question = "I LIKED the previous card, try to understand why. Generate another card for speaking role play in OET exam. The card must be in JSON format with 5 keys: SETTINGS; PATIENT_CARD; DOCTOR_CARD; DOCTOR_TASK; PATIENT_TASK."
 oet_cards = [
     {
         "SETTINGS" : "Local Medical Clinic",
@@ -116,7 +118,7 @@ oet_cards = [
             "State that you do not want to take more time off work for a chest x-ray your symptoms are better by then"
         ],
     },
-] ## 510 | 414 | 455 | 571 tokens
+]
 
 few_shot_content = """
 You are a creating AI tool that creates MEDICINE speech card for an OET role-playing exam. 
@@ -138,7 +140,11 @@ Make sure that there are exactly five tasks for doctor and patient. You can comb
 
 Make up an assignment for the patient (write it in PATIENT_TASK).
 Write what the patient should say, answer or ask, but note that the patient's tasks should be related to the doctor's tasks. Sometimes patients show emotion and don't want to agree with the doctor's diagnosis or advice, but they eventually agree.
-""" ## 500 tokens
+
+Here's an example of such a card:
+
+__ideal_card__
+""" 
 
 # -------------------------- AI Patient --------------------------
 ai_patient_content = """
