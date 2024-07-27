@@ -1,10 +1,11 @@
 # OET Preparation Bot
 
-This is a Telegram bot designed to help users prepare for the Occupational English Test (OET) by generating new scenario cards (**MEDICINE**) and providing practice through role-playing games with an AI interlocutor. Additionally, it offers approximate evaluations of your dialogue with the bot.
+This is a Telegram bot designed to help users prepare for the **Occupational English Test (OET)** by generating new scenario for _medicine_ cards and providing practice through role-playing games with an AI interlocutor. Additionally, it offers approximate evaluations of your dialogue with the bot.
 
 ## Table of Contents
 
 - [Features](#features)
+- [Commands](#Available-Commands)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
@@ -13,18 +14,18 @@ This is a Telegram bot designed to help users prepare for the Occupational Engli
 
 ## Features
 
-- Generate Card: Use the /generate_card command to create new OET scenario cards. You can provide feedback on the generated cards, and the bot will learn from your preferences. (Only **MEDICINE**)\\
-- Play Game: Use the /play_game command to start a role-playing game where the AI Bot acts as your interlocutor. The conversation happens entirely through voice messages, simulating the OET Speaking exam. At the end of the game, you can evaluate the dialogue.\\
-- Show Liked Cards: Use the /show_liked_cards command to quickly view a few of your recently liked cards.\\
-- Evaluate the dialogue based on predefined criteria.\\
+* Generate Card: Use the /generate_card command to create new OET scenario cards. You can provide feedback on the generated cards, and the bot will learn from your preferences. (Only **MEDICINE**)
+* Play Game: Use the /play_game command to start a role-playing game where the AI Bot acts as your interlocutor. The conversation happens entirely through voice messages, simulating the OET Speaking exam. At the end of the game, you can evaluate the dialogue.
+* Show Liked Cards: Use the /show_liked_cards command to quickly view a few of your recently liked cards.
+* Evaluate the dialogue based on predefined criteria.
 
 ### Available Commands
 * __/start__: Start the bot and receive a welcome message.
 * __/help__: Get a list of available commands and their descriptions.
-* __/generate_card__ - Generate new OET scenario cards. (Only **MEDICINE**)
-* __/play_game__ - Start a role-playing game to practice OET Speaking.
+* __/generate_card__: Generate new OET scenario cards. (Only **MEDICINE**)
+* __/play_game__: Start a role-playing game to practice OET Speaking.
 * __/show_liked_cards__: View your recently liked OET scenario cards.
-* __/cancel__ - Cancel the current operation.
+* __/cancel__: Cancel the current operation.
 
 Happy studying and good luck on your exam! 🍀
 
